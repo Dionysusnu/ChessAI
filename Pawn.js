@@ -2,6 +2,7 @@
 class Pawn extends Piece {
 	constructor(board, x, y, color) {
 		super(board, x, y, color);
+		this.letter = 'P';
 	}
 
 	calcMoves() {
@@ -10,29 +11,44 @@ class Pawn extends Piece {
 		case true: {
 			if (!this.board.findPiece(this.x, this.y + 1)) {
 				if (this.y === 7) {
-					array.push(new Move(`${this.board.toLetter(this.x)}8`, this.x, this.y + 1, Knight));
-					array.push(new Move(`${this.board.toLetter(this.x)}8`, this.x, this.y + 1, Bishop));
-					array.push(new Move(`${this.board.toLetter(this.x)}8`, this.x, this.y + 1, Rook));
-					array.push(new Move(`${this.board.toLetter(this.x)}8`, this.x, this.y + 1, Queen));
+					array.push(new Move(this, `${this.board.toLetter(this.x)}8`, this.x, this.y + 1, Knight));
+					array.push(new Move(this, `${this.board.toLetter(this.x)}8`, this.x, this.y + 1, Bishop));
+					array.push(new Move(this, `${this.board.toLetter(this.x)}8`, this.x, this.y + 1, Rook));
+					array.push(new Move(this, `${this.board.toLetter(this.x)}8`, this.x, this.y + 1, Queen));
 				} else {
-					array.push(new Move(`${this.board.toLetter(this.x)}${this.y + 1}`, this.x, this.y + 1));
+					array.push(new Move(this, `${this.board.toLetter(this.x)}${this.y + 1}`, this.x, this.y + 1));
 				}
+			}
+			if (this.board.findPiece(this.x - 1, this.y + 1, false)) {
+				array.push(new Move(this, `${this.board.toLetter(this.x)}x${this.board.toLetter(this.x - 1)}${this.y + 1}`, this.x - 1, this.y + 1));
+			}
+			if (this.board.findPiece(this.x + 1, this.y + 1, false)) {
+				array.push(new Move(this, `${this.board.toLetter(this.x)}x${this.board.toLetter(this.x + 1)}${this.y + 1}`, this.x + 1, this.y + 1));
 			}
 			break;
 		}
 		case false: {
 			if (!this.board.findPiece(this.x, this.y - 1)) {
 				if (this.y === 2) {
-					array.push(new Move(`${this.board.toLetter(this.x)}1`, this.x, this.y - 1, Knight));
-					array.push(new Move(`${this.board.toLetter(this.x)}1`, this.x, this.y - 1, Bishop));
-					array.push(new Move(`${this.board.toLetter(this.x)}1`, this.x, this.y - 1, Rook));
-					array.push(new Move(`${this.board.toLetter(this.x)}1`, this.x, this.y - 1, Queen));
+					array.push(new Move(this, `${this.board.toLetter(this.x)}1`, this.x, this.y - 1, Knight));
+					array.push(new Move(this, `${this.board.toLetter(this.x)}1`, this.x, this.y - 1, Bishop));
+					array.push(new Move(this, `${this.board.toLetter(this.x)}1`, this.x, this.y - 1, Rook));
+					array.push(new Move(this, `${this.board.toLetter(this.x)}1`, this.x, this.y - 1, Queen));
 				} else {
-					array.push(new Move(`${this.board.toLetter(this.x)}${this.y - 1}`, this.x, this.y - 1));
+					array.push(new Move(this, `${this.board.toLetter(this.x)}${this.y - 1}`, this.x, this.y - 1));
 				}
+			}
+			if (this.board.findPiece(this.x - 1, this.y - 1, true)) {
+				array.push(new Move(this, `${this.board.toLetter(this.x)}x${this.board.toLetter(this.x - 1)}${this.y - 1}`, this.x - 1, this.y - 1));
+			}
+			if (this.board.findPiece(this.x + 1, this.y - 1, true)) {
+				array.push(new Move(this, `${this.board.toLetter(this.x)}x${this.board.toLetter(this.x + 1)}${this.y - 1}`, this.x + 1, this.y - 1));
 			}
 			break;
 		}
 		}
+		console.log(this);
+		console.log(array);
+		return array;
 	}
 }

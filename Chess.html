@@ -9,7 +9,7 @@ canvas {
 }
 </style>
 </head>
-<body onload="board.startNormal()">
+<body onload="onLoad()">
 <script src="Move.js"></script>
 <script src="Piece.js"></script>
 <script src="Knight.js"></script>
@@ -21,8 +21,9 @@ canvas {
 <script src="Board.js"></script>
 <script src="index.js"></script>
 <input type="text" id="MOVE_INPUT">
-<button onmouseclick="movePiece()">PLAY</button>
-<button onmouseclick="board.startNormal()">RESTART</button>
+<button onclick="movePiece()">PLAY</button>
+<button onclick="onLoad()">RESTART</button>
 <p id="ERROR_MESSAGE"></p>
+<p id="MOVE_LIST"></p>
 </body>
 </html>
