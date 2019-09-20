@@ -1,4 +1,4 @@
-/* global Pawn, Knight, Bishop, Rook, Queen, King */
+/* global Pawn, Knight, Bishop, Rook, Queen, King, Collection */
 const letters = [null, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 const textHeight = 40;
 class Board {
@@ -11,16 +11,15 @@ class Board {
 		this.context.font = `${textHeight}px Calibri`;
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
 		this.clear();
-		this.pieces = new Map();
+		this.pieces = new Collection();
 	}
 
 	startNormal() {
-		this.clear();
+		this.pieces = new Collection();
 		for (let x = 1; x <= 8; x++) {
 			new Pawn(this, x, 2, true);
 			new Pawn(this, x, 7, false);
 		}
-		/*
 		new Knight(this, 2, 1, true);
 		new Knight(this, 7, 1, true);
 		new Knight(this, 2, 8, false);
@@ -35,9 +34,9 @@ class Board {
 		new Rook(this, 8, 8, false);
 		new Queen(this, 4, 1, true);
 		new Queen(this, 4, 8, false);
-		new King(this, 5, 1, true);
-		new King(this, 5, 8, false);
-		*/
+		this.whiteKing = new King(this, 5, 1, true);
+		this.blackKing = new King(this, 5, 8, false);
+		this.redraw();
 	}
 
 	setColor(color) {
@@ -112,5 +111,20 @@ class Board {
 
 	toLetter(num) {
 		return letters[num];
+	}
+
+	calcCheck(color) {
+		for (const piece of this.pieces.filterValues(p => p.color === !color)) {
+			if (piece.hits(color ? this.whiteKing.x : this.blackKing.x, color ? this.whiteKing.y : this.blackKing.y)) {
+				console.log('Check:');
+				console.log(piece);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	isOnBoard(x, y) {
+		return x >= 1 && x <= 8 && y >= 1 && y <= 8;
 	}
 }
