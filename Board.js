@@ -4,6 +4,7 @@ const textHeight = 40;
 class Board {
 	constructor() {
 		this.canvas = document.createElement('canvas');
+		this.canvas.innerHTML = "It seems that your browser does not support HTML5 games";
 		this.canvas.width = 480;
 		this.canvas.height = 480;
 		this.context = this.canvas.getContext('2d');
